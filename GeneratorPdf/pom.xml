@@ -15,6 +15,7 @@
 	<description>generator pdf</description>
 	<properties>
 		<java.version>11</java.version>
+		<itext.version>7.2.0</itext.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -45,6 +46,17 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.5.10</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.pdfbox</groupId>
+			<artifactId>pdfbox</artifactId>
+			<version>2.0.4</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
