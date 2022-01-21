@@ -45,6 +45,7 @@
   <div class="b-example-divider"></div>
 
   <main>
+<!-- Szablony -->
     <div class="album py-5 bg-light">
       
       <div class="container">
@@ -120,7 +121,28 @@
         </div>
       </div>
     </div>
+<!-- Szablony -->
 
+<!-- Tekst, Obraz -->
+<div class="container">
+  <h3>Dodaj tekst i obraz</h3>
+  <form>
+    <div class="form-group">
+      <label for="mainTextarea">Wprowadź swój tekst tutaj</label>
+      <textarea class="form-control" id="mainTextarea" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="FormControlFileText">Lub załaduj plik tekstowy</label>
+      <input type="file" class="form-control-file" id="FormControlFileText">
+    </div>
+    <div class="form-group">
+      <label for="FormControlFileImage">Dodaj zdjęcie</label>
+      <input type="file" class="form-control-file" id="FormControlFileImage">
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Generuj pdf</button>
+  </form>
+</div>
+<!-- Tekst, Obraz -->
 
 
   </main>
