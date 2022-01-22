@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,22 +17,23 @@ import java.io.*;
 public class GeneratorPdfControler {
 
 
-    public void generatePDF() throws Exception {
+    public void generatePDF(String text) throws Exception {
         Document doc = new Document();
         File file = new File("D://uczelnia//s5//programowanie//projekt//GeneratorPdf//pdfitext_Test.pdf");
         FileOutputStream pdfFileout = new FileOutputStream(file);
         PdfWriter.getInstance(doc, pdfFileout);
         doc.open();
 
-        Paragraph para = new Paragraph("Test");
+        Paragraph para = new Paragraph(text);
         doc.add(para);
         doc.close();
     }
 
-    @RequestMapping(value = "/generatePdf", method = RequestMethod.GET)
-    public void downloadPDF(HttpServletRequest request, HttpServletResponse response)
+    @RequestMapping(value = "/generatePdf", method = RequestMethod.POST)
+    public void downloadPDF(HttpServletRequest request, HttpServletResponse response,
+                            @RequestParam("textArea") String text)
             throws Exception {
-        generatePDF();
+        generatePDF(text);
         response.setContentType("/pdf");
         response.setHeader("Content-disposition","attachment;filename="+ "testPDF.pdf");
         try {

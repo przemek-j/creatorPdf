@@ -126,10 +126,10 @@
 <!-- Tekst, Obraz -->
 <div class="container">
   <h3>Dodaj tekst i obraz</h3>
-  <form action="http://localhost:8080/generatePdf" method="get">
+  <form action="http://localhost:8080/generatePdf" method="post">
     <div class="form-group">
       <label for="mainTextarea">Wprowadź swój tekst tutaj</label>
-      <textarea class="form-control" id="mainTextarea" rows="3"></textarea>
+      <textarea name="textArea" class="form-control" id="mainTextarea" rows="3"></textarea>
     </div>
     <div class="form-group">
       <label for="FormControlFileText">Lub załaduj plik tekstowy</label>
