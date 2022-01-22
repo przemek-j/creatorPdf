@@ -23,7 +23,8 @@ public class GeneratorPdfControler {
         FileOutputStream pdfFileout = new FileOutputStream(file);
         PdfWriter.getInstance(doc, pdfFileout);
         doc.open();
-
+        if(text.isEmpty())
+            text = " ";
         Paragraph para = new Paragraph(text);
         doc.add(para);
         doc.close();

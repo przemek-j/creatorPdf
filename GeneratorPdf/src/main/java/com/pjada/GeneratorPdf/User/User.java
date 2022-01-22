@@ -1,4 +1,4 @@
-package com.pjada.GeneratorPdf;
+package com.pjada.GeneratorPdf.User;
 
 import javax.persistence.*;
 
