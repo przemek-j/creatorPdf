@@ -15,26 +15,13 @@ import java.io.*;
 
 @Controller
 public class GeneratorPdfControler {
-
-
-    public void generatePDF(String text) throws Exception {
-        Document doc = new Document();
-        File file = new File("D://uczelnia//s5//programowanie//projekt//GeneratorPdf//pdfitext_Test.pdf");
-        FileOutputStream pdfFileout = new FileOutputStream(file);
-        PdfWriter.getInstance(doc, pdfFileout);
-        doc.open();
-        if(text.isEmpty())
-            text = " ";
-        Paragraph para = new Paragraph(text);
-        doc.add(para);
-        doc.close();
-    }
+    GeneratorPdf generatorPDF = new GeneratorPdf();
 
     @RequestMapping(value = "/generatePdf", method = RequestMethod.POST)
     public void downloadPDF(HttpServletRequest request, HttpServletResponse response,
                             @RequestParam("textArea") String text)
             throws Exception {
-        generatePDF(text);
+        generatorPDF.generatePDF(text);
         response.setContentType("/pdf");
         response.setHeader("Content-disposition","attachment;filename="+ "testPDF.pdf");
         try {
