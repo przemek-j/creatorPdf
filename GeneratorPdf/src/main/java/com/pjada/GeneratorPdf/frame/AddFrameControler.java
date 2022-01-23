@@ -17,7 +17,7 @@ public class AddFrameControler {
 
     @RequestMapping("/addFrame")
     public String addFrame(@RequestParam("name") String name,
-                           @RequestParam("image") byte[] image,
+                           @RequestParam("image") String image,
                            Model model)
     throws Exception{
         Frame frame = new Frame(name, image);

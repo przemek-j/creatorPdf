@@ -9,10 +9,9 @@ public class Frame {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
-    @Lob
-    private byte[] image;
+    private String image;
 
-    public Frame(String name, byte[] image) {
+    public Frame(String name, String image) {
         this.name = name;
         this.image = image;
     }
@@ -25,11 +24,11 @@ public class Frame {
         this.name = name;
     }
 
-    public byte[] getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(String image) {
         this.image = image;
     }
 
