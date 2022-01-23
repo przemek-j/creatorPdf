@@ -9,11 +9,11 @@ public class Frame {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
-    private String address;
+    private String image;
 
-    public Frame(String name, String address) {
+    public Frame(String name, String image) {
         this.name = name;
-        this.address = address;
+        this.image = image;
     }
 
     public String getName() {
@@ -24,20 +24,18 @@ public class Frame {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
+    public String getImage() {
+        return image;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setImage(String image) {
+        this.image = image;
     }
 
     @Override
     public String toString() {
         return "Frame{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
+                "name='" + name + '\'' +
                 '}';
     }
 }
