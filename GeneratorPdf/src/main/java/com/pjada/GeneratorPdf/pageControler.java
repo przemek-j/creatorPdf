@@ -19,4 +19,8 @@ public class pageControler {
     public String getSignUp(){
         return "signUp";
     }
+    @RequestMapping("addFrame.html")
+    public String getaddFrame(){
+        return "addFrame";
+    }
 }
