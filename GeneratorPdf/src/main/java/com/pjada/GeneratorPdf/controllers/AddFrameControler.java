@@ -1,5 +1,7 @@
-package com.pjada.GeneratorPdf.frame;
+package com.pjada.GeneratorPdf.controllers;
 
+import com.pjada.GeneratorPdf.models.Frame;
+import com.pjada.GeneratorPdf.repo.FrameRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +17,7 @@ public class AddFrameControler {
         this.frameRepo = frameRepo;
     }
 
-    @RequestMapping("/addFrame")
+    @RequestMapping("/addFrames")
     public String addFrame(@RequestParam("name") String name,
                            @RequestParam("image") String image,
                            Model model)
