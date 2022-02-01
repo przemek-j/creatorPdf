@@ -34,9 +34,15 @@
           <li><a href="addFrame" class="nav-link px-2 text-white">About</a></li>
         </ul>
 
-        <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2" onclick="window.location.href='login'">Login</button>
-          <button type="button" class="btn btn-warning" onclick="window.location.href='signUp'">Sign-up</button>
+        <div class="text-end d-flex">
+          <span class="me-2" th:text=${userName}>...</span>
+          <!--<button type="button" class="btn btn-outline-light me-2" onclick="window.location.href=#" th:href = @{/logout} ><span th:text=${login}>.</span></button>
+          -->
+          <form th:action=${login} method="post">
+            <button type="submit" class="btn btn-outline-light me-2"><span th:text=${login}>.</span></button>
+          </form>
+        
+            <button type="button" class="btn btn-warning" onclick="window.location.href='signUp'">Sign-up</button>
         </div>
       </div>
     </div>

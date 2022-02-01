@@ -27,8 +27,8 @@ public class AddUserControler {
         userRepo.save(user);
 
         System.out.println(user);
-        model.addAttribute("user",user);
-        return "login";
+        model.addAttribute("login","login");
+        return "index";
     }
 
 }

@@ -30,7 +30,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/addFrame").hasRole("USER")
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/index");
+                .defaultSuccessUrl("/index")
+                .and()
+                .logout();
         http.csrf().disable();
         http.headers().frameOptions().disable();
 
