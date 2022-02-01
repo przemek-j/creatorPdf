@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class pageControler {
 
-    @RequestMapping("index")
+
+    @RequestMapping(value = {"/", "index"})
     public String getIndex(Model model){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
@@ -32,5 +33,7 @@ public class pageControler {
     public String getaddFrame(){
         return "addFrame";
     }
+
+
 
 }
