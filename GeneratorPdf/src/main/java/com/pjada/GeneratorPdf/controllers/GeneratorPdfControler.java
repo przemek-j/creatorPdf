@@ -1,7 +1,8 @@
-package com.pjada.GeneratorPdf;
+package com.pjada.GeneratorPdf.controllers;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.pjada.GeneratorPdf.GeneratorPdf;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;

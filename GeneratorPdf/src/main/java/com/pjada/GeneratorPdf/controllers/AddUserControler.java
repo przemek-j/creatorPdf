@@ -1,5 +1,7 @@
-package com.pjada.GeneratorPdf.User;
+package com.pjada.GeneratorPdf.controllers;
 
+import com.pjada.GeneratorPdf.models.User;
+import com.pjada.GeneratorPdf.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +23,7 @@ public class AddUserControler {
             @RequestParam("password") String pass,
                 Model model)
         throws Exception{
-        User user = new User(name,pass);
+        User user = new User(name,pass,"ROLE_USER");
         userRepo.save(user);
 
         System.out.println(user);

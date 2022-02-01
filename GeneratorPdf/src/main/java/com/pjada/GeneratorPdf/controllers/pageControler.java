@@ -1,4 +1,4 @@
-package com.pjada.GeneratorPdf;
+package com.pjada.GeneratorPdf.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,19 +7,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class pageControler {
 
-    @RequestMapping("index.html")
+    @RequestMapping("index")
     public String getIndex(){
+
         return "index";
     }
-    @RequestMapping("login.html")
-    public String getLogin(){
-        return "login";
-    }
-    @RequestMapping("signUp.html")
+    @RequestMapping("signUp")
     public String getSignUp(){
         return "signUp";
     }
-    @RequestMapping("addFrame.html")
+
+    @RequestMapping("addFrame")
     public String getaddFrame(){
         return "addFrame";
     }

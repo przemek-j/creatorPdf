@@ -1,27 +1,42 @@
-package com.pjada.GeneratorPdf.User;
+package com.pjada.GeneratorPdf.models;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="Users")
+@Table(name="User")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String name;
+    @Column(nullable = false, unique = true)
+    private String userName;
     private String password;
+    private String roles;
 
-    public User(String name, String password) {
-        this.name = name;
+    public User(String name, String password, String roles) {
+        this.userName = name;
         this.password = password;
+        this.roles = roles;
+
+    }
+
+    public User() {
+    }
+
+    public String getRoles() {
+        return roles;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
     }
 
     public String getName() {
-        return name;
+        return userName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.userName = name;
     }
 
     public String getPassword() {
@@ -36,7 +51,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + userName + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }
