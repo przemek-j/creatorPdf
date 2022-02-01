@@ -52,6 +52,7 @@
 
   <main>
 <!-- Szablony -->
+<form action="http://localhost:8080/generatePdf" method="post">
     <div class="album py-5 bg-light">
       
       <div class="container">
@@ -66,7 +67,8 @@
                 <p class="card-text">Pusty dokument</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Wybierz</button>
+                    <input type="radio" class="btn-check" name="frame" id="empty" value="empty" autocomplete="off" checked>
+                    <label class="btn btn-sm btn-outline-secondary" for="empty">Wybierz</label>
                   </div>
                 </div>
               </div>
@@ -74,12 +76,13 @@
           </div>
           <div class="col">
             <div class="card shadow-sm">
-               <img src="https://images.all-free-download.com/images/graphicwebp/document_border_template_classical_curves_decoration_symmetric_style_6830515.webp" alt="classic" width="100%" height="150">
+               <img th:src="@{/img/classic.jpg}" alt="classic" width="100%" height="150">
               <div class="card-body">
                 <p class="card-text">Z klasą</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Wybierz</button>
+                    <input type="radio" class="btn-check" name="frame" id="classic" value="classic" autocomplete="off" >
+                    <label class="btn btn-sm btn-outline-secondary" for="classic">Wybierz</label>
                   </div>
                 </div>
               </div>
@@ -87,12 +90,13 @@
           </div>
           <div class="col">
             <div class="card shadow-sm">
-               <img src="https://images.all-free-download.com/images/graphicwebp/border_template_green_leaves_decoration_sparkling_space_backdrop_6829787.webp" alt="green-leaves" width="100%" height="150">
+               <img th:src="@{/img/green-leaves.jpg}" alt="green-leaves" width="100%" height="150">
               <div class="card-body">
                 <p class="card-text">Poczuj wiosenny klimat</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Wybierz</button>
+                    <input type="radio" class="btn-check" name="frame" id="green-leaves" value="green-leaves" autocomplete="off">
+                    <label class="btn btn-sm btn-outline-secondary" for="green-leaves">Wybierz</label>
                   </div>
                 </div>
               </div>
@@ -100,12 +104,13 @@
           </div>
           <div class="col">
             <div class="card shadow-sm">
-              <img src="https://image.freepik.com/free-vector/yellow-colors-diploma_1020-424.jpg" alt="yellow-diploma" width="100%" height="150"> 
+              <img th:src="@{/img/yellow-diploma.jpg}" alt="yellow-diploma" width="100%" height="150"> 
               <div class="card-body">
                 <p class="card-text">Świetny do dyplomów.</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Wybierz</button>
+                    <input type="radio" class="btn-check" name="frame" id="yellow-diploma" value="yellow-diploma" autocomplete="off">
+                    <label class="btn btn-sm btn-outline-secondary" for="yellow-diploma">Wybierz</label>
                   </div>
                 </div>
               </div>
@@ -113,12 +118,13 @@
           </div>
           <div class="col">
             <div class="card shadow-sm">
-               <img src="https://images.all-free-download.com/images/graphicwebp/autumn_background_yellow_leaves_decoration_sparkling_bokeh_style_6828973.webp" alt="yellow-leaves" width="100%" height="150">
+               <img th:src="@{/img/yellow-leaves.jpg}" alt="yellow-leaves" width="100%" height="150">
               <div class="card-body">
                 <p class="card-text">Jesieni czas !</p>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-outline-secondary">Wybierz</button>
+                    <input type="radio" class="btn-check" name="frame" id="yellow-leaves" value="yellow-leaves" autocomplete="off">
+                    <label class="btn btn-sm btn-outline-secondary" for="yellow-leaves">Wybierz</label>
                   </div>
                 </div>
               </div>
@@ -132,7 +138,7 @@
 <!-- Tekst, Obraz -->
 <div class="container">
   <h3>Dodaj tekst i obraz</h3>
-  <form action="http://localhost:8080/generatePdf" method="post">
+  
     <div class="form-group">
       <label for="mainTextarea">Wprowadź swój tekst tutaj</label>
       <textarea name="textArea" class="form-control" id="mainTextarea" rows="3"></textarea>

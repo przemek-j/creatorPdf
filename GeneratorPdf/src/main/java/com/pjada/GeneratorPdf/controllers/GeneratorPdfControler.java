@@ -20,9 +20,11 @@ public class GeneratorPdfControler {
 
     @RequestMapping(value = "/generatePdf", method = RequestMethod.POST)
     public void downloadPDF(HttpServletRequest request, HttpServletResponse response,
-                            @RequestParam("textArea") String text)
+                            @RequestParam("textArea") String text,
+                            @RequestParam("frame") String frame)
             throws Exception {
-        generatorPDF.generatePDF(text);
+        System.out.println("Chosen frame: " + frame);
+        generatorPDF.generatePDF(text, frame);
         response.setContentType("/pdf");
         response.setHeader("Content-disposition","attachment;filename="+ "testPDF.pdf");
         try {
