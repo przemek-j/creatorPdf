@@ -47,16 +47,18 @@
 <div class="container mt-4">
     
 <h3>Twój profil</h3>
-<span th:text=${login}> </span>
-<h4>Zapisane znaki wodne</h4>
-<form class="mx-auto" style="width: 200px;" action="http://localhost:8080/addWatermark" method="post">
+<span th:text=${userName}> </span>
+<h6>Zapisane znaki wodne</h6>
+znaki...
+<h6>Dodaj nowy</h6>
+<form style="width: 200px;" action="http://localhost:8080/addWatermark" method="post">
     <div class="form-group">
       <label for="inputname">Nazwa</label>
       <input name="name" type="text" class="form-control" id="inputname" placeholder="wprowadź nazwę" required>
     </div>
     <div class="form-group mt-2">
       <label for="FormControlFileImage">Dodaj znak wodny</label>
-      <input type="file" class="form-control-file" id="FormControlFileImage">
+      <input name="image" type="file" class="form-control-file" id="FormControlFileImage">
     </div>
     <button type="submit" class="btn btn-primary mt-2">Dodaj</button>
   </form>

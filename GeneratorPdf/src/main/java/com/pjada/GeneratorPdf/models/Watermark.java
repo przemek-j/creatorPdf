@@ -1,6 +1,7 @@
 package com.pjada.GeneratorPdf.models;
 
 import javax.persistence.*;
+import java.awt.*;
 
 @Entity
 @Table(name = "Watermark")
@@ -9,9 +10,10 @@ public class Watermark {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
-    private String image;
+    @Lob
+    private byte[] image;
 
-    public Watermark(String name, String image) {
+    public Watermark(String name, byte[] image) {
         this.name = name;
         this.image = image;
     }
@@ -24,11 +26,11 @@ public class Watermark {
         this.name = name;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 
