@@ -47,10 +47,44 @@
 <div class="container mt-4">
     
 <h3>Twój profil</h3>
-<span th:text=${userName}> </span>
+<span th:text=${userName}> </span>><br>
 <h6>Zapisane znaki wodne</h6>
-znaki...
-<h6>Dodaj nowy</h6>
+<table>
+  <thead>
+      <tr>
+          <th> Nazwa </th>
+          <th> plik </th>
+      </tr>
+  </thead>
+  <tbody>
+<tr th:if="${watermarks.empty}">
+          <td colspan="2">Brak zapisanych znaków wodnych</td>
+      </tr>
+      <tr th:each="watermark : ${watermarks}">
+          <td><span th:text="${watermark.name}"> Title </span></td>
+          <td><span th:text="${watermark.image}"> Author </span></td>
+      </tr>
+      
+  </tbody>
+</table><br>
+<table>
+  <thead>
+      <tr>
+          <th> Nazwa </th>
+          <th> plik </th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td><span th:text="${nam}"> Title </span></td>
+          <td><img th:src="*{'data:image/jpeg;base64,'+imag}" alt="" /></td>
+      </tr>
+      
+  </tbody>
+</table><br>
+
+
+<h5>Dodaj nowy</h6>
 <form style="width: 200px;" action="http://localhost:8080/addWatermark" method="post">
     <div class="form-group">
       <label for="inputname">Nazwa</label>
