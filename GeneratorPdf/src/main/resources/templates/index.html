@@ -30,14 +30,12 @@
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="index" class="nav-link px-2 text-secondary">Home</a></li>
-          <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>
-          <li><a href="addFrame" class="nav-link px-2 text-white">About</a></li>
+          <li><a href="add" class="nav-link px-2 text-white">Profil</a></li>
+          <li><a href="about" class="nav-link px-2 text-white">O stronie</a></li>
         </ul>
 
         <div class="text-end d-flex">
           <span class="me-2" th:text=${userName}>...</span>
-          <!--<button type="button" class="btn btn-outline-light me-2" onclick="window.location.href=#" th:href = @{/logout} ><span th:text=${login}>.</span></button>
-          -->
           <form th:action=${login} method="post">
             <button type="submit" class="btn btn-outline-light me-2"><span th:text=${login}>.</span></button>
           </form>

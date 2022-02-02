@@ -46,15 +46,17 @@
 
 <div class="container mt-4">
     
-<h3>Dodawanie szablonu</h3>
-<form class="mx-auto" style="width: 200px;" action="http://localhost:8080/addFrames" method="post">
+<h3>Twój profil</h3>
+<span th:text=${login}> </span>
+<h4>Zapisane znaki wodne</h4>
+<form class="mx-auto" style="width: 200px;" action="http://localhost:8080/addWatermark" method="post">
     <div class="form-group">
       <label for="inputname">Nazwa</label>
       <input name="name" type="text" class="form-control" id="inputname" placeholder="wprowadź nazwę" required>
     </div>
     <div class="form-group mt-2">
-      <label for="inputimage">Adres szablonu</label>
-      <input name="image" type="text" class="form-control" id="inputimage" placeholder="wprowadź adres" required>
+      <label for="FormControlFileImage">Dodaj znak wodny</label>
+      <input type="file" class="form-control-file" id="FormControlFileImage">
     </div>
     <button type="submit" class="btn btn-primary mt-2">Dodaj</button>
   </form>
