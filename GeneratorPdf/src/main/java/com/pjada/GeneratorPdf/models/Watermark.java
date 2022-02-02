@@ -1,5 +1,7 @@
 package com.pjada.GeneratorPdf.models;
 
+import org.hibernate.engine.internal.Cascade;
+
 import javax.persistence.*;
 import java.awt.*;
 
@@ -13,9 +15,17 @@ public class Watermark {
     @Lob
     private byte[] image;
 
-    public Watermark(String name, byte[] image) {
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
+
+    public Watermark() {
+    }
+
+    public Watermark(String name, byte[] image, User user) {
         this.name = name;
         this.image = image;
+        this.user = user;
     }
 
     public String getName() {
