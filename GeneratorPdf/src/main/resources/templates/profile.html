@@ -60,6 +60,8 @@
       <tr th:each="watermark : ${watermarks}">
           <td><span th:text="${watermark.name}"> Title </span></td>
           <td><img th:src="@{${watermark.image}}" /></td>
+          <td><a href="#" th:href="@{/kasuj(id=${watermark.id})}" class="btn btn-danger">
+            <i class="fa fa-trash-o fa-lg"></i>Kasuj</a></td>
       </tr>
       
   </tbody>

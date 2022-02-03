@@ -27,12 +27,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/index").permitAll()
                 .antMatchers("/generatePdf").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/addFrame").hasRole("USER")
+                .antMatchers("/add").hasAnyRole("ADMIN","USER")
                 .and()
                 .formLogin()
                 .defaultSuccessUrl("/index")
                 .and()
-                .logout();
+                .logout().logoutSuccessUrl("/index");
         http.csrf().disable();
         http.headers().frameOptions().disable();
 

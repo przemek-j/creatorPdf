@@ -1,6 +1,7 @@
 package com.pjada.GeneratorPdf.controllers;
 
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 import com.pjada.GeneratorPdf.FileUploadUtil;
@@ -20,11 +21,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class AddWatermarkControler {
+public class WatermarkControler {
     WatermarkRepo watermarkRepo;
     UserRepo userRepo;
+    pageControler pageControler;
     @Autowired
-    public AddWatermarkControler(WatermarkRepo watermarkRepo, UserRepo userRepo) {
+    public WatermarkControler(WatermarkRepo watermarkRepo, UserRepo userRepo) {
         this.watermarkRepo = watermarkRepo;
         this.userRepo = userRepo;
     }
@@ -47,6 +49,29 @@ public class AddWatermarkControler {
 
         AddUserControler addUserControler = new AddUserControler(userRepo);
         addUserControler.updateUser(user.get().getId(),watermark);
+
+        List<Watermark> watermarks = watermarkRepo.findAllByUser_Id(user.get().getId());
+        model.addAttribute("watermarks",watermarks);
+        com.pjada.GeneratorPdf.controllers.pageControler.passUser(model);
+
+        return "profile";
+    }
+
+    @RequestMapping("/kasuj")
+    public String deleteWatermark(
+            @RequestParam("id")Integer id,
+            Model model
+    ){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        Optional<User> user = userRepo.findByUserName(userDetails.getUsername());
+
+        watermarkRepo.deleteById(id);
+
+
+        List<Watermark> watermarks = watermarkRepo.findAllByUser_Id(user.get().getId());
+        model.addAttribute("watermarks",watermarks);
+        com.pjada.GeneratorPdf.controllers.pageControler.passUser(model);
         return "profile";
     }
 }

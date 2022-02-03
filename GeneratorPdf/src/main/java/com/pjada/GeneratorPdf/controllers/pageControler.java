@@ -66,7 +66,7 @@ public class pageControler {
 
     }
 
-    public Model passUser(Model m){
+    public static Model passUser(Model m){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         if(currentPrincipalName!="anonymousUser")
@@ -78,9 +78,6 @@ public class pageControler {
         return m;
     }
 
-    public String encodeImage(byte[] img){
-        return Base64.getUrlEncoder().encodeToString(img);
-    }
 
 
 

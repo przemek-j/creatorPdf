@@ -14,7 +14,7 @@ public class Watermark {
     private String name;
     private String imagePath;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
@@ -25,6 +25,14 @@ public class Watermark {
         this.name = name;
         this.imagePath = imagePath;
         this.user = user;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
