@@ -12,8 +12,7 @@ public class Watermark {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
-    @Lob
-    private byte[] image;
+    private String imagePath;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -22,9 +21,9 @@ public class Watermark {
     public Watermark() {
     }
 
-    public Watermark(String name, byte[] image, User user) {
+    public Watermark(String name, String imagePath, User user) {
         this.name = name;
-        this.image = image;
+        this.imagePath = imagePath;
         this.user = user;
     }
 
@@ -36,12 +35,12 @@ public class Watermark {
         this.name = name;
     }
 
-    public byte[] getImage() {
-        return image;
+    public String getImage() {
+        return imagePath;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setImage(String image) {
+        this.imagePath = image;
     }
 
     @Override
@@ -49,7 +48,7 @@ public class Watermark {
         return "Watermark{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", image='" + image + '\'' +
+                ", image='" + imagePath + '\'' +
                 '}';
     }
 }

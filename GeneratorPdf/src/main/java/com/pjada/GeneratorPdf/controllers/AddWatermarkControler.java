@@ -1,7 +1,9 @@
 package com.pjada.GeneratorPdf.controllers;
 
+import java.util.Base64;
 import java.util.Optional;
 
+import com.pjada.GeneratorPdf.FileUploadUtil;
 import com.pjada.GeneratorPdf.models.User;
 import com.pjada.GeneratorPdf.models.Watermark;
 import com.pjada.GeneratorPdf.repo.UserRepo;
@@ -12,8 +14,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class AddWatermarkControler {
@@ -26,17 +30,24 @@ public class AddWatermarkControler {
     }
     @RequestMapping("/addWatermark")
     public String addWatermark(@RequestParam("name") String name,
-                           @RequestParam("image") byte[] image,
+                           @RequestParam("image") MultipartFile image,
                            Model model)
             throws Exception{
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Optional<User> user = userRepo.findByUserName(userDetails.getUsername());
-        Watermark watermark = new Watermark(name, image, user.get());
+
+        String fileName = StringUtils.cleanPath(image.getOriginalFilename());
+        String uploadDir = "src/main/resources/static/user-watermarks/" + user.get().getId();
+        FileUploadUtil.saveFile(uploadDir,fileName,image);
+
+        Watermark watermark = new Watermark(name,"user-watermarks/" + user.get().getId()+ "/" + fileName, user.get());
         watermarkRepo.save(watermark);
+
         AddUserControler addUserControler = new AddUserControler(userRepo);
-        System.out.println(user.get().getId());
         addUserControler.updateUser(user.get().getId(),watermark);
         return "profile";
     }
 }
+

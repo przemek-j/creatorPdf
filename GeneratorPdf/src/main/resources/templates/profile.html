@@ -48,51 +48,34 @@
     
 <h3>Twój profil</h3>
 <span th:text=${userName}> </span>><br>
-<h6>Zapisane znaki wodne</h6>
-<table>
+<h6>Zapisane znaki wodne:</h6>
+<table class="table">
   <thead>
       <tr>
-          <th> Nazwa </th>
-          <th> plik </th>
+          <th scope="col"> Nazwa </th>
+          <th scope="col"> plik </th>
       </tr>
   </thead>
   <tbody>
-<tr th:if="${watermarks.empty}">
-          <td colspan="2">Brak zapisanych znaków wodnych</td>
-      </tr>
       <tr th:each="watermark : ${watermarks}">
           <td><span th:text="${watermark.name}"> Title </span></td>
-          <td><span th:text="${watermark.image}"> Author </span></td>
-      </tr>
-      
-  </tbody>
-</table><br>
-<table>
-  <thead>
-      <tr>
-          <th> Nazwa </th>
-          <th> plik </th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><span th:text="${nam}"> Title </span></td>
-          <td><img th:src="*{'data:image/jpeg;base64,'+imag}" alt="" /></td>
+          <td><img th:src="@{${watermark.image}}" /></td>
       </tr>
       
   </tbody>
 </table><br>
 
 
-<h5>Dodaj nowy</h6>
-<form style="width: 200px;" action="http://localhost:8080/addWatermark" method="post">
+
+<h5>Dodaj nowy</h5>
+<form style="width: 200px;" action="http://localhost:8080/addWatermark" method="post" enctype="multipart/form-data">
     <div class="form-group">
       <label for="inputname">Nazwa</label>
       <input name="name" type="text" class="form-control" id="inputname" placeholder="wprowadź nazwę" required>
     </div>
     <div class="form-group mt-2">
       <label for="FormControlFileImage">Dodaj znak wodny</label>
-      <input name="image" type="file" class="form-control-file" id="FormControlFileImage">
+      <input name="image" type="file" class="form-control-file" id="FormControlFileImage" accept="image/png, image/jpeg" >
     </div>
     <button type="submit" class="btn btn-primary mt-2">Dodaj</button>
   </form>
