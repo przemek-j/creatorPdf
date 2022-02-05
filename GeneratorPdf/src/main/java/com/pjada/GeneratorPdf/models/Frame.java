@@ -16,6 +16,13 @@ public class Frame {
         this.image = image;
     }
 
+    public Frame() {
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
     }
@@ -36,6 +43,7 @@ public class Frame {
     public String toString() {
         return "Frame{" +
                 "name='" + name + '\'' +
+                "ścieżka='" + image + '\'' +
                 '}';
     }
 }

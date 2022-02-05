@@ -1,7 +1,9 @@
 package com.pjada.GeneratorPdf.controllers;
 
+import com.pjada.GeneratorPdf.models.Frame;
 import com.pjada.GeneratorPdf.models.User;
 import com.pjada.GeneratorPdf.models.Watermark;
+import com.pjada.GeneratorPdf.repo.FrameRepo;
 import com.pjada.GeneratorPdf.repo.UserRepo;
 import com.pjada.GeneratorPdf.repo.WatermarkRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,8 @@ public class pageControler {
     @Autowired
     WatermarkRepo watermarkRepo;
     @Autowired
+    FrameRepo frameRepo;
+    @Autowired
     UserRepo userRepo;
 
     @RequestMapping(value = {"/", "index"})
@@ -32,21 +36,7 @@ public class pageControler {
     public String getSignUp(){
         return "signUp";
     }
-/*
-    @RequestMapping("getWatermark")
-    public String getWatermark(
-            @RequestParam("name")String name,
-            @RequestParam("image") byte[] img,
-            Model model){
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Optional<User> user = userRepo.findByUserName(userDetails.getUsername());
-        List<Watermark> watermarks = watermarkRepo.findAll();
-        System.out.println(watermarks);
-
-        return "profile";
-    }*/
 
     @RequestMapping("add")
     public String add(Model model){
@@ -54,8 +44,12 @@ public class pageControler {
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         Optional<User> user = userRepo.findByUserName(userDetails.getUsername());
         model = passUser(model);
-        if(userDetails.getUsername().equals("admin"))
-            return "addFrame";
+        if(userDetails.getUsername().equals("admin")) {
+            List<Frame> frames = frameRepo.findAll();
+            System.out.println(frames);
+            model.addAttribute("frames", frames);
+            return "frames";
+        }
         else {
             List<Watermark> watermarks = watermarkRepo.findAllByUser_Id(user.get().getId());
             System.out.println(watermarks);
