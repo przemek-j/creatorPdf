@@ -1,9 +1,7 @@
 package com.pjada.GeneratorPdf.models;
 
-import org.hibernate.engine.internal.Cascade;
 
 import javax.persistence.*;
-import java.awt.*;
 
 @Entity
 @Table(name = "Watermark")
@@ -13,6 +11,7 @@ public class Watermark {
     private Integer id;
     private String name;
     private String imagePath;
+
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
