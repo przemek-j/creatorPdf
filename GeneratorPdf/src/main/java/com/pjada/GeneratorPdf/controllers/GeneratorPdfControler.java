@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 import java.io.*;
 
 @Controller
@@ -26,16 +27,34 @@ public class GeneratorPdfControler {
     public void downloadPDF(HttpServletRequest request, HttpServletResponse response,
                             @RequestParam("textArea") String text,
                             @RequestParam("frame") String frame,
-                            @RequestParam(value = "txt", required = false)MultipartFile txtFile)
+                            @RequestParam(value = "txt", required = false)MultipartFile txtFile,
+                            @RequestParam(value = "img", required = false)MultipartFile imgFile,
+                            @RequestParam(value = "background-color", required = false)String color)
             throws Exception {
         System.out.println("Chosen frame: " + frame);
-        if(txtFile != null){
+        Color javaColor = Color.decode(color);
+        System.out.println(javaColor);
+
+
+
+        if(!txtFile.isEmpty() && !imgFile.isEmpty()){
+            String fileName = StringUtils.cleanPath(txtFile.getOriginalFilename());
+            String uploadDir = "src/main/resources/static/txt/";
+            FileUploadUtil.saveFile(uploadDir,fileName,txtFile);
+
+            String imgFileName = StringUtils.cleanPath(imgFile.getOriginalFilename());
+            String imgUploadDir = "src/main/resources/static/user-img/";
+            FileUploadUtil.saveFile(imgUploadDir,imgFileName,imgFile);
+            generatorPDF.generatePDF(text, frame, uploadDir + "/" + fileName,"user-img/" + imgFileName );
+        }else if(!txtFile.isEmpty()){
             String fileName = StringUtils.cleanPath(txtFile.getOriginalFilename());
             String uploadDir = "src/main/resources/static/txt/";
             FileUploadUtil.saveFile(uploadDir,fileName,txtFile);
             generatorPDF.generatePDF(text,frame,uploadDir + "/" + fileName);
+        }else if(!imgFile.isEmpty()){
+            //
         }else
-            generatorPDF.generatePDF(text, frame);
+            generatorPDF.generatePDF(text, javaColor);
         response.setContentType("/pdf");
         response.setHeader("Content-disposition","attachment;filename="+ "testPDF.pdf");
         try {
