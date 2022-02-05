@@ -1,0 +1,23 @@
+
+Funkjonalności
+
+Założenia funkjonalności aplikacji:
+
+    Minimalne:
+        obsługa plików tekstowych
+        obsługa obrazów
+        automatyczna generacja pdf
+        kolor tła
+        wybór ozdobnych ramek
+    Oczekiwane:
+        skalowanie obiektów
+        dostosowanie kolejności
+        dodawanie nagłówków, stopek, znaków wodnych itp.
+        wybór czcionki
+        zabezpieczanie hasłem
+    Maksymalne:
+        modyfikacja istniejących pdf
+        tworzenie elementów graficznych
+        aktywny podgląd podczas kreacjii
+        obsługa XFA (konwersja, wybieranie danych i generowanie z nich pdf)
+

@@ -2,13 +2,17 @@ package com.pjada.GeneratorPdf.controllers;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.pjada.GeneratorPdf.FileUploadUtil;
 import com.pjada.GeneratorPdf.GeneratorPdf;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,10 +25,17 @@ public class GeneratorPdfControler {
     @RequestMapping(value = "/generatePdf", method = RequestMethod.POST)
     public void downloadPDF(HttpServletRequest request, HttpServletResponse response,
                             @RequestParam("textArea") String text,
-                            @RequestParam("frame") String frame)
+                            @RequestParam("frame") String frame,
+                            @RequestParam(value = "txt", required = false)MultipartFile txtFile)
             throws Exception {
         System.out.println("Chosen frame: " + frame);
-        generatorPDF.generatePDF(text, frame);
+        if(txtFile != null){
+            String fileName = StringUtils.cleanPath(txtFile.getOriginalFilename());
+            String uploadDir = "src/main/resources/static/txt/";
+            FileUploadUtil.saveFile(uploadDir,fileName,txtFile);
+            generatorPDF.generatePDF(text,frame,uploadDir + "/" + fileName);
+        }else
+            generatorPDF.generatePDF(text, frame);
         response.setContentType("/pdf");
         response.setHeader("Content-disposition","attachment;filename="+ "testPDF.pdf");
         try {
