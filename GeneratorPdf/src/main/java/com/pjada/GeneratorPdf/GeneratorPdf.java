@@ -3,6 +3,7 @@ package com.pjada.GeneratorPdf;
 import com.itextpdf.text.*;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.pdfbox.io.IOUtils;
 
@@ -29,6 +30,7 @@ public class GeneratorPdf {
         if(text.isEmpty())
             text = " ";
         Paragraph para = new Paragraph(text);
+        para.setIndentationLeft(30);
         doc.add(para);
     }
     public void addBackgroundColor(Color color) throws DocumentException {
@@ -48,6 +50,7 @@ public class GeneratorPdf {
     public void addTextFromFile(String filePath) throws DocumentException {
         String text = getStringFromFile(filePath);
         Paragraph para = new Paragraph(text);
+        para.setIndentationLeft(30);
         doc.add(para);
     }
     public void addImageFromFile(String imagePath) throws DocumentException, IOException {
