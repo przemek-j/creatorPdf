@@ -31,30 +31,37 @@ public class GeneratorPdfControler {
                             @RequestParam(value = "img", required = false)MultipartFile imgFile,
                             @RequestParam(value = "background-color", required = false)String color)
             throws Exception {
-        System.out.println("Chosen frame: " + frame);
         Color javaColor = Color.decode(color);
-        System.out.println(javaColor);
 
-
+        generatorPDF.openNewPdf();
+        generatorPDF.addBackgroundColor(javaColor);
+        generatorPDF.addFrame(frame);
 
         if(!txtFile.isEmpty() && !imgFile.isEmpty()){
             String fileName = StringUtils.cleanPath(txtFile.getOriginalFilename());
             String uploadDir = "src/main/resources/static/txt/";
             FileUploadUtil.saveFile(uploadDir,fileName,txtFile);
+            generatorPDF.addTextFromFile( uploadDir + "/" + fileName);
 
             String imgFileName = StringUtils.cleanPath(imgFile.getOriginalFilename());
             String imgUploadDir = "src/main/resources/static/user-img/";
             FileUploadUtil.saveFile(imgUploadDir,imgFileName,imgFile);
-            generatorPDF.generatePDF(text, frame, uploadDir + "/" + fileName,"user-img/" + imgFileName );
+            generatorPDF.addImageFromFile("user-img/" + imgFileName );
         }else if(!txtFile.isEmpty()){
             String fileName = StringUtils.cleanPath(txtFile.getOriginalFilename());
             String uploadDir = "src/main/resources/static/txt/";
             FileUploadUtil.saveFile(uploadDir,fileName,txtFile);
-            generatorPDF.generatePDF(text,frame,uploadDir + "/" + fileName);
+            generatorPDF.addTextFromFile( uploadDir + "/" + fileName);
         }else if(!imgFile.isEmpty()){
-            //
-        }else
-            generatorPDF.generatePDF(text, javaColor);
+            String imgFileName = StringUtils.cleanPath(imgFile.getOriginalFilename());
+            String imgUploadDir = "src/main/resources/static/user-img/";
+            FileUploadUtil.saveFile(imgUploadDir,imgFileName,imgFile);
+            generatorPDF.addImageFromFile("user-img/" + imgFileName );
+            generatorPDF.addText(text);
+        }else {
+            generatorPDF.addText(text);
+        }
+        generatorPDF.closePdf();
         response.setContentType("/pdf");
         response.setHeader("Content-disposition","attachment;filename="+ "testPDF.pdf");
         try {
