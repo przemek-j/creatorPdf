@@ -4,6 +4,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.Image;
 import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.pdfbox.io.IOUtils;
 
@@ -19,6 +20,15 @@ public class GeneratorPdf {
     public void openNewPdf() throws FileNotFoundException, DocumentException {
         doc = new Document();
         File file = new File("D://uczelnia//s5//programowanie//projekt//GeneratorPdf//pdfitext_Test.pdf");
+        FileOutputStream pdfFileout = new FileOutputStream(file);
+        PdfWriter.getInstance(doc, pdfFileout);
+        doc.open();
+    }
+    public void openNewPdf(String path) throws FileNotFoundException, DocumentException {
+        doc = new Document();
+
+        System.out.println("D://uczelnia//s5//programowanie//projekt//GeneratorPdf//" + path);
+        File file = new File("D://uczelnia//s5//programowanie//projekt//GeneratorPdf//" + path);
         FileOutputStream pdfFileout = new FileOutputStream(file);
         PdfWriter.getInstance(doc, pdfFileout);
         doc.open();

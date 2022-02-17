@@ -36,6 +36,10 @@ public class pageControler {
     public String getSignUp(){
         return "signUp";
     }
+    @RequestMapping("editPdf")
+    public String getEditPdf(){
+        return "editPdf";
+    }
 
 
     @RequestMapping("add")

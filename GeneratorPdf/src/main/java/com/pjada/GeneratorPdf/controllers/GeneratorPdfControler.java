@@ -29,11 +29,21 @@ public class GeneratorPdfControler {
                             @RequestParam("frame") String frame,
                             @RequestParam(value = "txt", required = false)MultipartFile txtFile,
                             @RequestParam(value = "img", required = false)MultipartFile imgFile,
-                            @RequestParam(value = "background-color", required = false)String color)
+                            @RequestParam(value = "background-color", required = false)String color,
+                            @RequestParam(value = "pdf", required = false) MultipartFile pdfFile)
             throws Exception {
         Color javaColor = Color.decode(color);
 
-        generatorPDF.openNewPdf();
+
+
+        if(!pdfFile.isEmpty()){
+            String fileNamePdf = StringUtils.cleanPath(pdfFile.getOriginalFilename());
+            String uploadDirPdf = "src/main/resources/static/pdf/";
+            FileUploadUtil.saveFile(uploadDirPdf,fileNamePdf,pdfFile);
+            generatorPDF.openNewPdf(uploadDirPdf + "/" + fileNamePdf);
+        }else
+            generatorPDF.openNewPdf();
+
         generatorPDF.addBackgroundColor(javaColor);
         generatorPDF.addFrame(frame);
 
