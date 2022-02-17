@@ -1,14 +1,10 @@
 package com.pjada.GeneratorPdf.controllers;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.PdfWriter;
+
 import com.pjada.GeneratorPdf.FileUploadUtil;
 import com.pjada.GeneratorPdf.GeneratorPdf;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +18,9 @@ import java.io.*;
 @Controller
 public class GeneratorPdfControler {
     GeneratorPdf generatorPDF = new GeneratorPdf();
+
+    public GeneratorPdfControler() throws FileNotFoundException {
+    }
 
     @RequestMapping(value = "/generatePdf", method = RequestMethod.POST)
     public void downloadPDF(HttpServletRequest request, HttpServletResponse response,

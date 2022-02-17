@@ -1,81 +1,94 @@
 package com.pjada.GeneratorPdf;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.ColumnText;
-import com.itextpdf.text.pdf.PdfWriter;
-import org.apache.pdfbox.io.IOUtils;
 
 
-import java.awt.*;
+
+import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.color.DeviceRgb;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.geom.Rectangle;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfPage;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
+import com.itextpdf.layout.Canvas;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Text;
+
+
+import java.awt.Color;
 import java.io.*;
+import java.net.MalformedURLException;
 
 public class GeneratorPdf {
+    static final String path = "D://uczelnia//s5//programowanie//projekt//GeneratorPdf//pdfitext_Test.pdf";
+    PdfDocument pdfDoc;
     Document doc;
-    public GeneratorPdf() {
-        doc = new Document();
+    PdfCanvas pdfCanvas;
+    public GeneratorPdf() throws FileNotFoundException {
+        pdfDoc = new PdfDocument(new PdfWriter(path));
     }
-    public void openNewPdf() throws FileNotFoundException, DocumentException {
-        doc = new Document();
-        File file = new File("D://uczelnia//s5//programowanie//projekt//GeneratorPdf//pdfitext_Test.pdf");
-        FileOutputStream pdfFileout = new FileOutputStream(file);
-        PdfWriter.getInstance(doc, pdfFileout);
-        doc.open();
+    public void openNewPdf() throws FileNotFoundException {
+        pdfDoc = new PdfDocument(new PdfWriter(path));
+        doc = new Document(pdfDoc);
+        pdfCanvas = new PdfCanvas(pdfDoc.addNewPage());
     }
     public void closePdf(){
         doc.close();
+        pdfDoc.close();
     }
-    public void addText(String text) throws DocumentException {
+    public void addText(String text) throws IOException {
         if(text.isEmpty())
             text = " ";
-        Paragraph para = new Paragraph(text);
-        para.setIndentationLeft(30);
-        doc.add(para);
-    }
-    public void addBackgroundColor(Color color) throws DocumentException {
-        Rectangle background = new Rectangle(doc.getPageSize());
-        background.setBackgroundColor(new BaseColor(color.getRed(),color.getGreen(),color.getBlue()));
-        doc.add(background);
-    }
-    public void addFrame(String frame) throws DocumentException, IOException {
-        if(!frame.equals("empty")) {
-            Image background = Image.getInstance("http://localhost:8080/img/" + frame + ".jpg");
-            background.scaleAbsolute(doc.getPageSize());
-            background.setAlignment(Image.UNDERLYING);
-            background.setAbsolutePosition(0, 0);
-            doc.add(background);
-        }
-    }
-    public void addTextFromFile(String filePath) throws DocumentException {
-        String text = getStringFromFile(filePath);
-        Paragraph para = new Paragraph(text);
-        para.setIndentationLeft(30);
-        doc.add(para);
-    }
-    public void addImageFromFile(String imagePath) throws DocumentException, IOException {
-        Image image = Image.getInstance("http://localhost:8080/" + imagePath);
-        doc.add(image);
-    }
+        PdfPage page1 = pdfDoc.getFirstPage();
+        PdfCanvas pdfCanvas1 = new PdfCanvas(page1.newContentStreamBefore(), page1.getResources(), pdfDoc);
 
-    public void generatePDF(String text, String frame) throws Exception {
-        Document doc = new Document();
-        File file = new File("D://uczelnia//s5//programowanie//projekt//GeneratorPdf//pdfitext_Test.pdf");
-        FileOutputStream pdfFileout = new FileOutputStream(file);
-        PdfWriter.getInstance(doc, pdfFileout);
-        doc.open();
-        if(!frame.equals("empty")) {
-            Image background = Image.getInstance("http://localhost:8080/img/" + frame + ".jpg");
-            background.scaleAbsolute(doc.getPageSize());
-            background.setAlignment(Image.UNDERLYING);
-            background.setAbsolutePosition(0, 0);
-            doc.add(background);
-        }
-        if(text.isEmpty())
-            text = " ";
+        System.out.println(text);
+        Rectangle rectangle = new Rectangle(100, 500, 100, 250);
+        pdfCanvas.setFillColor(com.itextpdf.kernel.color.Color.BLACK);
+        pdfCanvas1.saveState()
+                .rectangle(rectangle)
+                .fill()
+                .restoreState();
+        Canvas canvas = new Canvas(pdfCanvas, pdfDoc, rectangle);
+        PdfFont font = PdfFontFactory.createFont(FontConstants.TIMES_ROMAN);
+        Text t = new Text(text).setFont(font).setFontColor(com.itextpdf.kernel.color.Color.BLACK);
         Paragraph para = new Paragraph(text);
-        doc.add(para);
-        doc.close();
+        canvas.add(para);
+        canvas.close();
+    }
+    public void addBackgroundColor(Color color){
+        System.out.println(color.toString());
+        com.itextpdf.kernel.color.Color iTextColor = new DeviceRgb(color.getRed(),color.getGreen(),color.getBlue());
+        Rectangle background = new Rectangle(PageSize.A4.getWidth(),PageSize.A4.getHeight());
+        pdfCanvas.setFillColor(iTextColor);
+        pdfCanvas.rectangle(background);
+        pdfCanvas.fill();
+
+    }
+    public void addFrame(String frame) throws  IOException {
+        if(!frame.equals("empty")) {
+
+            ImageData background = ImageDataFactory.create("http://localhost:8080/img/" + frame + ".jpg");
+            Rectangle rectangle = new Rectangle(PageSize.A4.getWidth(),PageSize.A4.getHeight());
+            pdfCanvas.addImage(background,rectangle,false);
+
+        }
+    }
+    public void addTextFromFile(String filePath) throws IOException {
+        String text = getStringFromFile(filePath);
+        addText(text);
+    }
+    public void addImageFromFile(String imagePath) throws MalformedURLException {
+
+        ImageData image = ImageDataFactory.create("http://localhost:8080/" + imagePath);
+        Rectangle rectangle = new Rectangle(300,300,image.getWidth(),image.getHeight());
+        pdfCanvas.addImage(image,rectangle,false);
     }
 
     private String getStringFromFile(String filePath){
