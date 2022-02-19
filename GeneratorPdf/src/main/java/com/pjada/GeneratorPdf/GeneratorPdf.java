@@ -42,14 +42,18 @@ public class GeneratorPdf {
         doc.close();
         pdfDoc.close();
     }
-    public void addText(String text) throws IOException {
+    public void addText(String text,int marginL, int marginR, int marginT, int marginD) throws IOException {
         if(text.isEmpty())
             text = " ";
         PdfPage page1 = pdfDoc.getFirstPage();
         PdfCanvas pdfCanvas1 = new PdfCanvas(page1.newContentStreamBefore(), page1.getResources(), pdfDoc);
-
-        System.out.println(text);
-        Rectangle rectangle = new Rectangle(100, 500, 100, 250);
+        System.out.println(PageSize.A4.getWidth());
+        System.out.println(PageSize.A4.getHeight());
+        if(marginR == 0)
+            marginR = (int) PageSize.A4.getWidth();
+        if(marginD == 0)
+            marginD = (int) PageSize.A4.getHeight();
+        Rectangle rectangle = new Rectangle(marginL, (int) PageSize.A4.getHeight() -marginD, marginR-marginL, marginD-marginT);
         pdfCanvas.setFillColor(com.itextpdf.kernel.color.Color.BLACK);
         pdfCanvas1.saveState()
                 .rectangle(rectangle)
@@ -80,14 +84,14 @@ public class GeneratorPdf {
 
         }
     }
-    public void addTextFromFile(String filePath) throws IOException {
+    public void addTextFromFile(String filePath,int marginL, int marginR, int marginT, int marginD) throws IOException {
         String text = getStringFromFile(filePath);
-        addText(text);
+        addText(text,marginL,marginR,marginT,marginD);
     }
-    public void addImageFromFile(String imagePath) throws MalformedURLException {
+    public void addImageFromFile(String imagePath, int x, int y) throws MalformedURLException {
 
         ImageData image = ImageDataFactory.create("http://localhost:8080/" + imagePath);
-        Rectangle rectangle = new Rectangle(300,300,image.getWidth(),image.getHeight());
+        Rectangle rectangle = new Rectangle(x,y - image.getHeight(),image.getWidth(),image.getHeight());
         pdfCanvas.addImage(image,rectangle,false);
     }
 

@@ -28,10 +28,17 @@ public class GeneratorPdfControler {
                             @RequestParam("frame") String frame,
                             @RequestParam(value = "txt", required = false)MultipartFile txtFile,
                             @RequestParam(value = "img", required = false)MultipartFile imgFile,
-                            @RequestParam(value = "background-color", required = false)String color)
+                            @RequestParam(value = "background-color", required = false)String color,
+                            @RequestParam(value = "marginLeft", required = false)String textMarginLeft,
+                            @RequestParam(value = "marginRight", required = false)String textMarginRight,
+                            @RequestParam(value = "marginTop", required = false)String textMarginTop,
+                            @RequestParam(value = "marginDown", required = false)String textMarginDown,
+                            @RequestParam(value = "pictureHorizont")int pictureHorizont,
+                            @RequestParam(value = "pictureVertical")int pictureVertical)
             throws Exception {
         Color javaColor = Color.decode(color);
-
+        System.out.println(pictureHorizont);
+        System.out.println(pictureVertical);
         generatorPDF.openNewPdf();
         generatorPDF.addBackgroundColor(javaColor);
         generatorPDF.addFrame(frame);
@@ -40,25 +47,25 @@ public class GeneratorPdfControler {
             String fileName = StringUtils.cleanPath(txtFile.getOriginalFilename());
             String uploadDir = "src/main/resources/static/txt/";
             FileUploadUtil.saveFile(uploadDir,fileName,txtFile);
-            generatorPDF.addTextFromFile( uploadDir + "/" + fileName);
+            generatorPDF.addTextFromFile( uploadDir + "/" + fileName,getMargin(textMarginLeft), getMargin(textMarginRight), getMargin(textMarginTop), getMargin(textMarginDown));
 
             String imgFileName = StringUtils.cleanPath(imgFile.getOriginalFilename());
             String imgUploadDir = "src/main/resources/static/user-img/";
             FileUploadUtil.saveFile(imgUploadDir,imgFileName,imgFile);
-            generatorPDF.addImageFromFile("user-img/" + imgFileName );
+            generatorPDF.addImageFromFile("user-img/" + imgFileName, pictureHorizont,pictureVertical);
         }else if(!txtFile.isEmpty()){
             String fileName = StringUtils.cleanPath(txtFile.getOriginalFilename());
             String uploadDir = "src/main/resources/static/txt/";
             FileUploadUtil.saveFile(uploadDir,fileName,txtFile);
-            generatorPDF.addTextFromFile( uploadDir + "/" + fileName);
+            generatorPDF.addTextFromFile( uploadDir + "/" + fileName,getMargin(textMarginLeft), getMargin(textMarginRight), getMargin(textMarginTop), getMargin(textMarginDown));
         }else if(!imgFile.isEmpty()){
             String imgFileName = StringUtils.cleanPath(imgFile.getOriginalFilename());
             String imgUploadDir = "src/main/resources/static/user-img/";
             FileUploadUtil.saveFile(imgUploadDir,imgFileName,imgFile);
-            generatorPDF.addImageFromFile("user-img/" + imgFileName );
-            generatorPDF.addText(text);
+            generatorPDF.addImageFromFile("user-img/" + imgFileName,pictureHorizont,pictureVertical);
+            generatorPDF.addText(text,getMargin(textMarginLeft), getMargin(textMarginRight), getMargin(textMarginTop), getMargin(textMarginDown));
         }else {
-            generatorPDF.addText(text);
+            generatorPDF.addText(text,getMargin(textMarginLeft), getMargin(textMarginRight), getMargin(textMarginTop), getMargin(textMarginDown));
         }
         generatorPDF.closePdf();
         response.setContentType("/pdf");
@@ -76,6 +83,14 @@ public class GeneratorPdfControler {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    private int getMargin(String margin){
+        if(margin == null)
+            return 0;
+        else if(margin.isEmpty())
+            return 0;
+        else
+            return Integer.valueOf(margin);
     }
 
 }

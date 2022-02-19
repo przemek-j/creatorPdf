@@ -11,7 +11,15 @@
 
 
     <style>
+      #verticalRange{
+        writing-mode: bt-lr; /* IE */
+        -webkit-appearance: slider-vertical; /* WebKit */
+        width: 10px;
+        height: 210px;
 
+        outline: none;
+        background:transparent;
+}
     </style>
 
   </head>
@@ -143,11 +151,19 @@
 <!-- Tekst, Obraz -->
 <div class="container">
   <h3>Dodaj tekst i obraz</h3>
-  
-    <div class="form-group">
+  <div class="row">
+    <div class="form-group col-lg">
       <label for="mainTextarea">Wprowadź swój tekst tutaj</label>
       <textarea name="textArea" class="form-control" id="mainTextarea" rows="3"></textarea>
     </div>
+
+    <div class="col-md-auto">
+      <input name="marginLeft" type="text" id="margin-left" placeholder="Lewy margines"><br>
+      <input class="mt-1" name="marginRight" type="text" id="margin-right" placeholder="Prawy margines"><br>
+      <input class="mt-1" name="marginTop" type="text" id="margin-top" placeholder="Górny margines"><br>
+      <input class="mt-1" name="marginDown" type="text" id="margin-down" placeholder="Dolny margines">
+    </div>
+  </div>
     <div class="form-group mt-2">
       <label for="FormControlFileText">Lub załaduj plik tekstowy</label>
       <input name="txt" type="file" class="form-control-file" id="FormControlFileText">
@@ -155,6 +171,18 @@
     <div class="form-group mt-2">
       <label for="FormControlFileImage">Dodaj zdjęcie</label>
       <input name="img" type="file" class="form-control-file" id="FormControlFileImage">
+    </div>
+    <div class="container form-group mt-2">  
+      <label for="horizontRange" class="form-label">Ustaw pozycję lewego górnego rogu zdjęcia</label><br>
+      <input name="pictureHorizont" style="width: 149px;" type="range"  id="horizontRange" min="0" max="595"><br>
+      <div class="row">
+        <div class="col-md-auto">
+      <div style="width:149px;height:210px;border:1px solid #000;"></div>
+    </div>
+      <div class="col">
+        <input name="pictureVertical" orient="vertical"  type="range"   id="verticalRange" min="0" max="842">
+      </div>
+      </div>
     </div>
     <button type="submit" class="btn btn-primary mt-2">Generuj pdf</button>
   </form>
